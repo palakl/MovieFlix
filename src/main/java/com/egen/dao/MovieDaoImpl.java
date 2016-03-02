@@ -16,12 +16,12 @@ public class MovieDaoImpl implements MovieDao {
 	EntityManager entityManager;
 
 	@Override
-	public Movie getMovieById(String id) {
+	public Movie findMovieById(String id) {
 		return entityManager.find(Movie.class, id);
 	}
 
 	@Override
-	public List<Movie> getMovieByType(String type) {
+	public List<Movie> findMovieByType(String type) {
 		List<Movie> movies = entityManager
 				.createQuery("from Movie where type= :type", Movie.class)
 				.setParameter("type", type).getResultList();
@@ -31,5 +31,12 @@ public class MovieDaoImpl implements MovieDao {
 	@Override
 	public Movie createMovie(Movie movie) {
 		return entityManager.merge(movie);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Movie> findAllMovie() {
+		List<Movie> movies = entityManager.createQuery("from Movie").getResultList();
+		return movies;
 	}
 }

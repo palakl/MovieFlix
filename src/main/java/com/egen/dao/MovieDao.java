@@ -6,9 +6,11 @@ import com.egen.model.Movie;
 
 public interface MovieDao {
 
-	public Movie getMovieById(String id);
+	public Movie findMovieById(String id);
 
-	public List<Movie> getMovieByType(String type);
+	public List<Movie> findMovieByType(String type);
+	
+	public List<Movie> findAllMovie();
 	
 	public Movie createMovie(Movie movie);
 

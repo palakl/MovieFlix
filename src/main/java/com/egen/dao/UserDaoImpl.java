@@ -23,7 +23,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public User getUserByEmail(String email) {
+	public User findUserByEmail(String email) {
 		TypedQuery<User> query = entityManager.createNamedQuery("User.findByEmail", User.class);
     	query.setParameter("email", email);
     	List<User> users = query.getResultList();
@@ -36,8 +36,22 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public User getUserById(String id) {
+	public User findUserById(String id) {
 		return entityManager.find(User.class, id);
+	}
+
+	@Override
+	public User findUserByEmailAndPassword(String email, String password) {
+		TypedQuery<User> query = entityManager.createNamedQuery("User.findByEmailAndPassword", User.class);
+		query.setParameter("email", email);
+		query.setParameter("password", password);
+		User user = query.getSingleResult();
+		if(user != null){
+			return user;
+		} else {
+			return null;
+		}
+		
 	}
 
 }

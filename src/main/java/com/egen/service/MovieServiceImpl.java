@@ -18,19 +18,24 @@ public class MovieServiceImpl implements MovieService {
 	private MovieDao movieDao;
 
 	@Override
-	public Movie getMovieById(String id) {
-		return movieDao.getMovieById(id);
+	public Movie findMovieById(String id) {
+		return movieDao.findMovieById(id);
 	}
 
 	@Override
-	public List<Movie> getMovieByType(String type) {
-		return movieDao.getMovieByType(type);
+	public List<Movie> findMovieByType(String type) {
+		return movieDao.findMovieByType(type);
 	}
 
 	@Override
 	public Movie createMovie(Movie movie) {
 		return movieDao.createMovie(movie);
 		
+	}
+
+	@Override
+	public List<Movie> findAllMovie() {
+		return movieDao.findAllMovie();
 	}
 
 }
