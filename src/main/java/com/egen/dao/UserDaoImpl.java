@@ -45,12 +45,13 @@ public class UserDaoImpl implements UserDao {
 		TypedQuery<User> query = entityManager.createNamedQuery("User.findByEmailAndPassword", User.class);
 		query.setParameter("email", email);
 		query.setParameter("password", password);
-		User user = query.getSingleResult();
-		if(user != null){
-			return user;
-		} else {
-			return null;
-		}
+		List<User> users = query.getResultList();
+    	if(users != null && users.size() == 1) {
+    		return users.get(0);
+    	}
+    	else {
+    		return null;
+    	}
 		
 	}
 

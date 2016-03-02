@@ -15,8 +15,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Movie {
 
 	@Id
-	@GeneratedValue(generator="uuid2")
-	@GenericGenerator(name="uuid2", strategy="uuid2")
+	@GeneratedValue(generator = "uuid2")
+	@GenericGenerator(name = "uuid2", strategy = "uuid2")
 	private String id;
 
 	private String title;
@@ -33,13 +33,13 @@ public class Movie {
 
 	private String director;
 
-	@Column(columnDefinition="TEXT")
+	@Column(columnDefinition = "TEXT")
 	private String writer;
 
-	@Column(columnDefinition="TEXT")
+	@Column(columnDefinition = "TEXT")
 	private String actors;
 
-	@Column(columnDefinition="TEXT")
+	@Column(columnDefinition = "TEXT")
 	private String plot;
 
 	private String language;
@@ -48,7 +48,7 @@ public class Movie {
 
 	private String awards;
 
-	@Column(columnDefinition="TEXT")
+	@Column(columnDefinition = "TEXT")
 	private String poster;
 
 	private String metaScore;
