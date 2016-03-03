@@ -14,7 +14,7 @@ import com.egen.model.User;
 
 @Repository
 public class RatingDaoImpl implements RatingDao {
-	
+
 	@PersistenceContext
 	EntityManager entityManager;
 
@@ -25,16 +25,29 @@ public class RatingDaoImpl implements RatingDao {
 
 	@Override
 	public Rating findRatingByMovieAndUser(Movie movie, User user) {
-		TypedQuery<Rating> query = entityManager.createNamedQuery("Rating.findByMovieAndUser", Rating.class);
+		TypedQuery<Rating> query = entityManager.createNamedQuery(
+				"Rating.findByMovieAndUser", Rating.class);
 		query.setParameter("movie", movie);
 		query.setParameter("user", user);
 		List<Rating> ratings = query.getResultList();
-    	if(ratings != null && ratings.size() == 1) {
-    		return ratings.get(0);
-    	}
-    	else {
-    		return null;
-    	}
+		if (ratings != null && ratings.size() == 1) {
+			return ratings.get(0);
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public List<Rating> findRatingByMovie(Movie movie) {
+		TypedQuery<Rating> query = entityManager.createNamedQuery(
+				"Rating.findByMovie", Rating.class);
+		query.setParameter("movie", movie);
+		List<Rating> ratings = query.getResultList();
+		if (ratings != null) {
+			return ratings;
+		} else {
+			return null;
+		}
 	}
 
 }

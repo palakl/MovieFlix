@@ -1,5 +1,7 @@
 package com.egen.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,11 @@ public class RatingServiceImpl implements RatingService {
 	@Override
 	public Rating findRatingByMovieAndUser(Movie movie, User user) {
 		return ratingDao.findRatingByMovieAndUser(movie, user);
+	}
+
+	@Override
+	public List<Rating> findRatingByMovie(Movie movie) {
+		return ratingDao.findRatingByMovie(movie);
 	}
 
 }

@@ -14,7 +14,8 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "ratings")
 @NamedQueries({
-	@NamedQuery(name = "Rating.findByMovieAndUser", query = "SELECT r FROM Rating r WHERE r.movie = :movie and r.user = :user")
+	@NamedQuery(name = "Rating.findByMovieAndUser", query = "SELECT r FROM Rating r WHERE r.movie = :movie and r.user = :user"),
+	@NamedQuery(name = "Rating.findByMovie", query = "SELECT r FROM Rating r WHERE r.movie = :movie")
 })
 public class Rating {
 

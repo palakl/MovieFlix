@@ -15,11 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.egen.exception.UserAlreadyExistsException;
 import com.egen.exception.UserNotFoundException;
-import com.egen.model.Movie;
-import com.egen.model.Rating;
 import com.egen.model.User;
-import com.egen.service.MovieService;
-import com.egen.service.RatingService;
 import com.egen.service.UserService;
 
 @RestController
@@ -29,12 +25,6 @@ public class UserController {
 	@Autowired
 	UserService userService;
 
-	@Autowired
-	RatingService ratingService;
-
-	@Autowired
-	MovieService movieService;
-
 	@RequestMapping(value = "{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find User By Id", notes = "Returns a user by it's id if it exists.")
 	public User findUserById(@PathVariable("id") String id)
@@ -42,9 +32,9 @@ public class UserController {
 		return userService.findUserById(id);
 	}
 
-	@RequestMapping(value = "email/{email}/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "email/{emailid}/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find User By Email", notes = "Returns a user by it's email if it exists.")
-	public User findUserByEmail(@PathVariable("email") String email,
+	public User findUserByEmail(@PathVariable("emailid") String email,
 			HttpServletRequest request) throws UserNotFoundException {
 		return userService.findUserByEmail(email);
 	}
@@ -69,27 +59,6 @@ public class UserController {
 			return null;
 		}
 
-	}
-
-	@RequestMapping(value = "{movieid}/{userid}/{rating}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ApiOperation(value = "Add a new rating for a movie", notes = "Create and return the rating for the movie")
-	public Rating addRating(@PathVariable("movieid") String movieId,
-			@PathVariable("userid") String userId,
-			@PathVariable("rating") Long value) throws UserNotFoundException {
-
-		Movie movie = movieService.findMovieById(movieId);
-		User user = userService.findUserById(userId);
-		Rating rating = ratingService.findRatingByMovieAndUser(movie, user);
-		if (rating == null) {
-			rating = new Rating();
-			rating.setMovie(movie);
-			rating.setUser(user);
-			rating.setValue(value);
-
-		} else {
-			rating.setValue((rating.getValue() + value) / 2);
-		}
-		return ratingService.addRating(rating);
 	}
 
 }
