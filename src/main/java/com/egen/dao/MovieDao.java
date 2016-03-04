@@ -9,9 +9,13 @@ public interface MovieDao {
 	public Movie findMovieById(String id);
 
 	public List<Movie> findMovieByType(String type);
-	
+
 	public List<Movie> findAllMovie();
-	
+
 	public Movie createMovie(Movie movie);
+	
+	public Movie updateMovie(Movie movie);
+
+	public Movie deleteMovie(Movie movie);
 
 }

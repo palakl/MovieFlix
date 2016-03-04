@@ -30,7 +30,8 @@ public class MovieDaoImpl implements MovieDao {
 
 	@Override
 	public Movie createMovie(Movie movie) {
-		return entityManager.merge(movie);
+		entityManager.persist(movie);
+		return movie;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -38,5 +39,16 @@ public class MovieDaoImpl implements MovieDao {
 	public List<Movie> findAllMovie() {
 		List<Movie> movies = entityManager.createQuery("from Movie").getResultList();
 		return movies;
+	}
+
+	@Override
+	public Movie updateMovie(Movie movie) {
+		return entityManager.merge(movie);
+	}
+
+	@Override
+	public Movie deleteMovie(Movie movie) {
+		entityManager.remove(movie);
+		return movie;
 	}
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.egen.dao.MovieDao;
+import com.egen.exception.MovieNotFoundException;
 import com.egen.model.Movie;
 
 @Service
@@ -18,8 +19,13 @@ public class MovieServiceImpl implements MovieService {
 	private MovieDao movieDao;
 
 	@Override
-	public Movie findMovieById(String id) {
-		return movieDao.findMovieById(id);
+	public Movie findMovieById(String id) throws MovieNotFoundException {
+		Movie movie = movieDao.findMovieById(id);
+		if(movie == null){
+			throw new MovieNotFoundException();
+		} else {
+			return movie;
+		}
 	}
 
 	@Override
@@ -36,6 +42,27 @@ public class MovieServiceImpl implements MovieService {
 	@Override
 	public List<Movie> findAllMovie() {
 		return movieDao.findAllMovie();
+	}
+
+	@Override
+	public Movie updateMovie(String id, Movie movie) throws MovieNotFoundException {
+		Movie existing = movieDao.findMovieById(id);
+		if(existing == null){
+			throw new MovieNotFoundException();
+		} else {
+			return movieDao.updateMovie(movie);
+		}
+		
+	}
+
+	@Override
+	public Movie deleteMovie(String id) throws MovieNotFoundException {
+		Movie existing = movieDao.findMovieById(id);
+		if(existing == null){
+			throw new MovieNotFoundException();
+		} else {
+			return movieDao.deleteMovie(existing);
+		}
 	}
 
 }

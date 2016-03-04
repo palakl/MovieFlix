@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.egen.exception.MovieNotFoundException;
 import com.egen.exception.UserNotFoundException;
 import com.egen.model.Movie;
 import com.egen.model.Rating;
@@ -36,7 +37,7 @@ public class RatingController {
 	@ApiOperation(value = "Add a new rating for a movie", notes = "Returns a rating for a movie")
 	public Rating addRating(@PathVariable("movieid") String movieId,
 			@PathVariable("userid") String userId,
-			@PathVariable("ratingvalue") Long value) throws UserNotFoundException {
+			@PathVariable("ratingvalue") Long value) throws UserNotFoundException, MovieNotFoundException {
 
 		Movie movie = movieService.findMovieById(movieId);
 		User user = userService.findUserById(userId);
@@ -53,7 +54,7 @@ public class RatingController {
 
 	@RequestMapping(value = "{movieid}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find rating for a movie", notes = "Create and return the rating for the movie")
-	public Long findRatingByMovie(@PathVariable("movieid") String movieId) {
+	public Long findRatingByMovie(@PathVariable("movieid") String movieId) throws MovieNotFoundException {
 
 		Movie movie = movieService.findMovieById(movieId);
 		List<Rating> ratings = ratingService.findRatingByMovie(movie);

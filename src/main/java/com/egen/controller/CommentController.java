@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.egen.exception.MovieNotFoundException;
 import com.egen.exception.UserNotFoundException;
 import com.egen.model.Comment;
 import com.egen.model.Movie;
@@ -36,7 +37,8 @@ public class CommentController {
 	@ApiOperation(value = "Add a new comment for a movie", notes = "Returns a comment for a movie")
 	public Comment addRating(@PathVariable("movieid") String movieId,
 			@PathVariable("userid") String userId,
-			@PathVariable("comment") String value) throws UserNotFoundException {
+			@PathVariable("comment") String value)
+			throws UserNotFoundException, MovieNotFoundException {
 
 		Movie movie = movieService.findMovieById(movieId);
 		User user = userService.findUserById(userId);
@@ -55,7 +57,8 @@ public class CommentController {
 	@RequestMapping(value = "{movieid}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find comments for a movie", notes = "Return a list of comments for a movie")
 	public List<Comment> findCommentsByMovie(
-			@PathVariable("movieid") String movieId) {
+			@PathVariable("movieid") String movieId)
+			throws MovieNotFoundException {
 
 		Movie movie = movieService.findMovieById(movieId);
 		List<Comment> comments = commentService.findCommentsByMovie(movie);
